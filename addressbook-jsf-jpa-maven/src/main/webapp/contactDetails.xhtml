@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    <h:outputStylesheet library="css" name="starter-template.css" />
+    
+</h:head> 
+<body> 
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="contactList.xhtml">AddressBookCom</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="starter-template">
+			      
+      	 <h:form id="form" class="form-horizontal"> 
+      	  
+				<div class="form-group">  
+					<div class="col-sm-4"></div>  
+					<div  class="col-sm-4">  
+						<h2 style="text-align: center">Contact Details</h2>  
+					</div>  
+				</div>  
+				<hr/>  
+				
+				<div class="form-group">  
+					<h:outputLabel class="control-label">Name:</h:outputLabel>  
+					<h:outputText value="#{contactBean.dto.name}" class="control-label"/>  
+				</div>  
+				
+				<div class="form-group">  
+					<h:outputLabel class="control-label">Surname:</h:outputLabel>  
+					<h:outputText class="control-label" value="#{contactBean.dto.surname}" />
+				</div>  
+				
+				<div class="form-group">  
+					<h:outputLabel class="control-label">Email:</h:outputLabel>  
+					<h:outputText class="control-label" value="#{contactBean.dto.email}" />
+				</div>  
+				
+				<ui:repeat var="address" value="#{contactBean.dto.addresses}" varStatus="varStatus">
+					<hr />
+					<div class="form-group">  
+						<h:outputLabel class="control-label">City-#{varStatus.index+1}:</h:outputLabel>  
+						<h:outputText class="control-label" value="#{address.city}" />
+					</div> 
+					<div class="form-group">  
+						<h:outputLabel class="control-label">Country-#{varStatus.index+1}:</h:outputLabel>  
+						<h:outputText class="control-label" value="#{address.country}" />
+					</div>  
+					
+				</ui:repeat> 
+				
+				<ui:repeat var="phone" value="#{contactBean.dto.phones}" varStatus="varStatus">
+					<hr />
+					<div class="form-group">  
+						<h:outputLabel class="control-label">Phone-#{varStatus.index+1}:</h:outputLabel>  
+						<h:outputText class="control-label" value="#{phone.phoneNumber}" />
+					</div>  
+				</ui:repeat> 
+			    
+			    <div class="form-group">  
+					<div class="col-sm-4"></div>  
+					<div class="col-sm-4">  
+						<h:link outcome="contactList" value="View Users Record List" class="btn btn-link" />  
+					</div> 
+				</div>
+			</h:form>  
+      	
+      </div>
+
+    </div><!-- /.container -->
+	 
+</body> 
+</html>

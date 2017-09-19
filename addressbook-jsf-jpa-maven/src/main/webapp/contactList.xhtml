@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    <h:outputStylesheet library="css" name="starter-template.css" />
+    
+</h:head> 
+<body> 
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="contactList.xhtml">AddressBookCom</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+
+      <div class="starter-template">
+      <h:form>
+	        <p class="lead">
+	        	<h:commandLink value="Click to add a new contact to your address book." action="newContact.xhtml?faces-redirect=true"/>
+	        </p>
+	        <h2>Contact List</h2>
+	        
+	        <h:dataTable binding="#{contactDatatable}" value="#{contactBean.getAll()}" var="c" styleClass="table table-striped table-bordered">
+	            <h:column>
+	                <f:facet name="header">#</f:facet>
+	                <h:outputText value="#{contactDatatable.rowIndex + 1}" />                
+	            </h:column>
+	            <h:column>
+	                <f:facet name="header">Name</f:facet>
+	                <h:outputText value="#{c.name}" />
+	            </h:column>
+	            
+	            <h:column>
+	                <f:facet name="header">Surname</f:facet>
+	                <h:outputText value="#{c.surname}" />
+	            </h:column>
+	            
+	            <h:column>
+	                <f:facet name="header">Email</f:facet>
+	                <h:outputText value="#{c.email}" />
+	            </h:column>
+	            
+	            <h:column>
+	                <f:facet name="header">Address</f:facet>
+	                <ui:repeat var="ca" value="#{c.addresses}">
+	                	<h:outputText value="#{ca.country}" /><br />
+	                </ui:repeat>
+	            </h:column>
+	            
+	            <h:column>
+	                <f:facet name="header">Phone</f:facet>
+	                <ui:repeat var="cp" value="#{c.phones}">
+	                	<h:outputText value="#{cp.phoneNumber}" /><br />
+	                </ui:repeat>
+	            </h:column>
+	            
+	            
+	            <h:column>
+	                <f:facet name="header">Delete</f:facet>
+	                <h:commandLink action="#{contactBean.deleteContact(c.id)}" value="Delete" />
+	            </h:column>
+	            
+	            <h:column>
+	                <f:facet name="header">Edit</f:facet>
+	                <h:commandLink value="Edit" action="#{contactBean.showEditPage()}"> 
+	                	<f:param name="id" value="#{c.id}" ></f:param>
+	                </h:commandLink>
+	            </h:column>
+	            
+	            <h:column>
+	                <f:facet name="header">Details</f:facet>
+	                <h:commandLink value="Details" action="#{contactBean.showDetailsPage()}"> 
+	                	<f:param name="id" value="#{c.id}" ></f:param>
+	                </h:commandLink>
+	            </h:column>
+	            
+	            <h:column>
+	                <f:facet name="header">Create a new address</f:facet>
+	                <h:commandLink value="Create a new address" action="#{addressBean.showNewAddressPage()}"> 
+	                	<f:param name="id" value="#{c.id}" ></f:param>
+	                </h:commandLink>
+	            </h:column>
+	            
+	        </h:dataTable>
+    	</h:form>
+      </div>
+
+    </div><!-- /.container -->
+	 
+</body> 
+</html>

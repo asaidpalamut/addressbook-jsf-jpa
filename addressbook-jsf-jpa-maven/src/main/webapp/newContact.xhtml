@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"> 
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"> 
+
+<h:head>
+	<meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1" http-equiv="X-UA-Conpatible" />
+    <h:outputStylesheet library="css" name="bootstrap.min.css" />
+    <h:outputStylesheet library="css" name="starter-template.css" />
+    
+</h:head> 
+<body> 
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="contactList.xhtml">AddressBookCom</a>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+    	
+      <div class="starter-template">
+      	
+      	
+      	 <h:form id="form" class="form-horizontal"> 
+      			
+      			<h:messages globalOnly="true" style="color:red" />
+      			  
+				<div class="form-group">  
+					<div class="col-sm-4"></div>  
+					<div  class="col-sm-4">  
+						<h2 style="text-align: center">Add New Contact</h2>  
+					</div>  
+				</div>  
+				<hr/>  
+				<div class="form-group">  
+					<h:outputLabel class="control-label col-sm-4">Name*</h:outputLabel>  
+					<div class="col-sm-4">  
+						<h:inputText id="name" value="#{contactBean.dto.name}" class="form-control" required="true" requiredMessage="Name can not be blank!"/> 
+						<h:message for="name" /> 
+					</div>  
+				</div>  
+				
+				<div class="form-group">  
+					<h:outputLabel class="control-label col-sm-4">Surname*</h:outputLabel>  
+					<div class="col-sm-4">  
+						<h:inputText id="surname" value="#{contactBean.dto.surname}" class="form-control" required="true" requiredMessage="Surname can not be blank!"/>  
+						<h:message for="surname" />
+					</div>  
+				</div>  
+				
+				<div class="form-group">  
+					<h:outputLabel class="control-label col-sm-4">Email</h:outputLabel>  
+					<div class="col-sm-4">  
+						<h:inputText id="email" value="#{contactBean.dto.email}" class="form-control" />  
+						<h:message for="email" />
+					</div>  
+				</div>  
+				
+				<ui:repeat var="address" value="#{contactBean.dto.addresses}">
+					<div class="form-group">  
+						<h:outputLabel class="control-label col-sm-4">City</h:outputLabel>  
+						<div class="col-sm-4">  
+							<h:inputText value="#{address.city}" class="form-control" />  
+						</div>  
+					</div>  
+					
+					<div class="form-group">  
+						<h:outputLabel class="control-label col-sm-4">Country*</h:outputLabel>  
+						<div class="col-sm-4">  
+							<h:inputText id="country" value="#{address.country}" class="form-control" required="true" requiredMessage="Country can not be blank!"> 
+								<f:validateRegex pattern="^[a-zA-Z]+$" />
+							</h:inputText> 
+							<h:message for="country" />
+						</div>  
+					</div>  
+				</ui:repeat>
+				
+				<div class="form-group">  
+					<h:dataTable id="tblFields" value="#{contactBean.dto.phones}" var="phoneField" binding="#{tblFieldsBinding}" styleClass="col-sm-offset-4">
+						<h:column>
+							<h:outputLabel class="control-label col-sm-4">Phone#{tblFieldsBinding.rowIndex+1}*</h:outputLabel>  
+						</h:column>
+						
+				        <h:column>
+				            <h:inputText id="phone" value="#{phoneField.phoneNumber}" class="form-control" required="true" requiredMessage="Phone can not be blank!"/>
+				            <h:message for="phone" />
+				        </h:column>
+				
+				        <h:column>
+				            <h:commandButton value="Remove" styleClass="btn btn-danger btn-sm">
+				                <f:ajax listener="#{contactBean.onButtonRemovePhoneFieldClick(phoneField)}" immediate="true" render="@form" /> 
+				            </h:commandButton>
+				        </h:column>
+				    </h:dataTable>
+				</div>
+				
+				<div class="form-group">
+				    <h:commandButton value="Add Phone" styleClass="btn btn-default">
+				        <f:ajax listener="#{contactBean.onButtonAddPhoneFieldClick}" execute="@form" render="tblFields" /> 
+				    </h:commandButton>
+			    </div>
+			    
+			    <div class="form-group">  
+					<div class="col-sm-4"></div>  
+					<div class="col-sm-4">  
+						<div class="col-sm-2">  
+							<h:commandButton value="Save" action="#{contactBean.createContact()}" class="btn btn-success"  style="width: 80px;" />  
+						</div>  
+						<div class="col-sm-1">  
+						</div>  
+						<div class="col-sm-2">  
+							<h:link outcome="contactList" value="View Contacts Record List" class="btn btn-primary" />  
+						</div>  
+					</div>  
+				</div>
+				
+				
+		</h:form>  
+      	
+      </div>
+
+    </div><!-- /.container -->
+	 
+</body> 
+</html>
