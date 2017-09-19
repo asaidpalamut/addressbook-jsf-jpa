@@ -25,20 +25,20 @@ public class AddressBean {
 
 	private Address address;
 	private AddressBookDto dto;
-	
+
 	private ContactService contactService;
 	private AddressService addressService;
 	private PhoneService phoneService;
 
 	public AddressBean() {
 	}
-	
+
 	@PostConstruct
 	public void init() {
 		contactService = new ContactServiceImpl();
 		addressService = new AddressServiceImpl();
 		phoneService = new PhoneServiceImpl();
-		
+
 		dto = new AddressBookDto();
 		address = new Address();
 	}
@@ -78,16 +78,15 @@ public class AddressBean {
 
 		return "newAddress.xhtml?faces-redirect=true&id=" + contactId;
 	}
-	
-	
+
 	public String createAddressForContact() {
-		
+
 		Contact contact = contactService.getById(dto.getId());
 		address.setContact(contact);
 		contact.getAddresses().add(address);
 		addressService.create(address);
 		init();
-		
+
 		return "contactList.xhtml?faces-redirect=true";
 	}
 

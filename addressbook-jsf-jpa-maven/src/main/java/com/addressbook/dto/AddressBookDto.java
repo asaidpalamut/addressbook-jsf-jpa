@@ -3,7 +3,6 @@ package com.addressbook.dto;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Email;

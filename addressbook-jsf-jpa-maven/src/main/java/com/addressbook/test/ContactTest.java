@@ -29,9 +29,9 @@ public class ContactTest {
 //			System.out.println(p.getPhoneNumber());
 //		}
 		
-		Phone phone = phoneService.getById(95L);
-		phone.setPhoneNumber("588888888");
-		phoneService.update(phone);
+//		Phone phone = phoneService.getById(95L);
+//		phone.setPhoneNumber("588888888");
+//		phoneService.update(phone);
 		
 //		/* Phone */
 //		Phone phone1 = new Phone();

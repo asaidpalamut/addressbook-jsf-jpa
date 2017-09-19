@@ -1,6 +1,5 @@
 package com.addressbook.managedbeans;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +28,7 @@ public class ContactBean {
 	private ContactService contactService;
 	private AddressService addressService;
 	private PhoneService phoneService;
-	
+
 	public ContactBean() {
 	}
 
@@ -38,7 +37,7 @@ public class ContactBean {
 		contactService = new ContactServiceImpl();
 		addressService = new AddressServiceImpl();
 		phoneService = new PhoneServiceImpl();
-		
+
 		dto = new AddressBookDto();
 		dto.getPhones().add(new Phone());
 		dto.getAddresses().add(new Address());
@@ -54,7 +53,7 @@ public class ContactBean {
 
 	/* Ajax */
 	public void onButtonRemovePhoneFieldClick(final Phone p_oField) {
-		
+
 		if (p_oField.getId() != null) {
 			phoneService.delete(p_oField);
 		}
@@ -75,7 +74,7 @@ public class ContactBean {
 
 		Contact contact = contactService.getById(id);
 		contactService.delete(contact);
-		
+
 		return "contactList.xhtml?faces-redirect=true";
 	}
 
@@ -84,8 +83,7 @@ public class ContactBean {
 		Contact saved = contactService.create(dto);
 		if (saved != null) {
 			/**
-			 * Kayıt Basarılı
-			 * yeni işlemler için sayfayı hazirla..
+			 * Kayıt Basarılı yeni işlemler için sayfayı hazirla..
 			 */
 			init();
 			return "contactList.xhtml?faces-redirect=true";
@@ -97,18 +95,17 @@ public class ContactBean {
 		}
 
 	}
-	
-	
+
 	public String showDetailsPage() {
-		
+
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-		Long contactId =  Long.valueOf(params.get("id"));
-		
+		Long contactId = Long.valueOf(params.get("id"));
+
 		Contact contact = contactService.getById(contactId);
 		List<Address> addresses = addressService.findByContactId(contactId);
 		List<Phone> phones = phoneService.findByContactId(contactId);
-		
+
 		dto.setId(contact.getId());
 		dto.setName(contact.getName());
 		dto.setSurname(contact.getSurname());
@@ -116,38 +113,34 @@ public class ContactBean {
 		dto.setAddresses(addresses);
 		dto.setPhones(phones);
 
-		
-		return "contactDetails.xhtml?faces-redirect=true&id="+contactId;
+		return "contactDetails.xhtml?faces-redirect=true&id=" + contactId;
 	}
-	
-	
+
 	public String showEditPage() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, String> params = context.getExternalContext().getRequestParameterMap();
-		Long contactId =  Long.valueOf(params.get("id"));
-		
+		Long contactId = Long.valueOf(params.get("id"));
+
 		Contact contact = contactService.getById(contactId);
 		List<Address> addresses = addressService.findByContactId(contactId);
 		List<Phone> phones = phoneService.findByContactId(contactId);
-		
+
 		dto.setId(contact.getId());
 		dto.setName(contact.getName());
 		dto.setSurname(contact.getSurname());
 		dto.setEmail(contact.getEmail());
 		dto.setAddresses(addresses);
 		dto.setPhones(phones);
-		
-		return "editContact.xhtml?faces-redirect=true&id="+contactId;
+
+		return "editContact.xhtml?faces-redirect=true&id=" + contactId;
 	}
-	
-	
+
 	public String updateContact() {
 
 		Contact updated = contactService.update(dto);
 		if (updated != null) {
 			/**
-			 * Kayıt Basarılı
-			 * yeni işlemler için sayfayı hazirla..
+			 * Kayıt Basarılı yeni işlemler için sayfayı hazirla..
 			 */
 			init();
 			return "contactList.xhtml?faces-redirect=true";
@@ -155,13 +148,13 @@ public class ContactBean {
 			/**
 			 * Kayt Basarısız
 			 */
-			return "editContact.xhtml?faces-redirect=true?id="+updated.getId();
+			return "editContact.xhtml?faces-redirect=true?id=" + updated.getId();
 		}
 
 	}
-	
+
 	public Contact contactDetails() {
-		
+
 		return null;
 	}
 
